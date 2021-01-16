@@ -8,7 +8,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "node test.js"
+    "test": "node src/test.js"
   },
   "dependencies": {
     "@slate-collaborative/backend": "^0.7.1",
