@@ -1,5 +1,6 @@
 import { SocketIOConnection } from "@slate-collaborative/backend";
 import { SocketIOCollaborationOptions } from "@slate-collaborative/backend/lib/SocketIOConnection";
+import { query } from "./db/index";
 import express from "express";
 import path from "path";
 
@@ -33,12 +34,15 @@ const config: SocketIOCollaborationOptions = {
   },
   onDocumentLoad: async (pathname) => {
     // request initial document ValueJSON by pathname
+    query(`SELECT id, type, content FROM documents WHERE id=$1;`, [1]);
     return defaultValue;
   },
   onDocumentSave: async (pathname, doc) => {
     // save document
-    // client.query(`UPDATE documents SET blocks = $1`, [doc]);
-    // console.log('onDocumentSave', pathname, doc)
+    query(
+      `INSERT INTO documents (id, type, content) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET type = $2, content = $3;`,
+      [1, "text", doc]
+    );
   },
 };
 
