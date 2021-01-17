@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 
 const pool = new Pool(
-  process.env.DOCUMENT_URL == null
+  process.env.DATABASE_URL == null
     ? { host: "localhost" }
     : {
         connectionString: process.env.DATABASE_URL,
