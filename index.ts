@@ -34,14 +34,26 @@ const config: SocketIOCollaborationOptions = {
   },
   onDocumentLoad: async (pathname) => {
     // request initial document ValueJSON by pathname
-    query(`SELECT id, type, content FROM documents WHERE id=$1;`, [1]);
-    return defaultValue;
+    console.log("querying");
+
+    const result = await query(
+      `SELECT id, type, content FROM documents WHERE id=$1;`,
+      [1]
+    );
+
+    console.log("result", result);
+
+    if (result.rows.length === 0) {
+      return defaultValue;
+    }
+
+    return result.rows[0].content.blocks;
   },
   onDocumentSave: async (pathname, doc) => {
-    // save document
+    console.log("saving", doc);
     query(
       `INSERT INTO documents (id, type, content) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET type = $2, content = $3;`,
-      [1, "text", doc]
+      [1, "text", { blocks: doc }]
     );
   },
 };
