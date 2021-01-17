@@ -2,6 +2,7 @@ import { SocketIOConnection } from "@slate-collaborative/backend";
 import { SocketIOCollaborationOptions } from "@slate-collaborative/backend/lib/SocketIOConnection";
 import express from "express";
 import path from "path";
+import { Client } from "pg";
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,6 +24,13 @@ const defaultValue = [
   },
 ];
 
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: { rejectUnauthorized: false },
+// });
+
+// client.connect();
+
 const config: SocketIOCollaborationOptions = {
   entry: server, // or specify port to start io server
   defaultValue,
@@ -32,15 +40,14 @@ const config: SocketIOCollaborationOptions = {
     return true;
   },
   onDocumentLoad: async (pathname) => {
-    // request initial document ValueJSON by pathnme
+    // request initial document ValueJSON by pathname
     return defaultValue;
   },
   onDocumentSave: async (pathname, doc) => {
     // save document
+    // client.query(`UPDATE documents SET blocks = $1`, [doc]);
     // console.log('onDocumentSave', pathname, doc)
   },
 };
 
 const connection = new SocketIOConnection(config);
-
-export default server;

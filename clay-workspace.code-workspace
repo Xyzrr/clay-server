@@ -7,5 +7,7 @@
 		"path": "../clay"
 	}
 ],
-  "settings": {}
+"settings": {
+	"typescript.tsdk": "clay/node_modules/typescript/lib"
+}
 }
