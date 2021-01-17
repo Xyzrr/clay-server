@@ -7,7 +7,7 @@
   },
   "main": "index.ts",
   "scripts": {
-    "start": "DATABASE_URL=localhost ts-node index.ts",
+    "start": "ts-node index.ts",
     "test": "node test.js"
   },
   "dependencies": {

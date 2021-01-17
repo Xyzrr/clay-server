@@ -1,10 +1,13 @@
 import { Pool } from "pg";
 
-const pool = new Pool({
-  //   connectionString: process.env.DATABASE_URL,
-  host: "localhost",
-  //   ssl: { rejectUnauthorized: false },
-});
+const pool = new Pool(
+  process.env.DOCUMENT_URL == null
+    ? { host: "localhost" }
+    : {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+      }
+);
 
 export const query = (text: string, params: any) => {
   return pool.query(text, params);
