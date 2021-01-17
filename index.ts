@@ -2,7 +2,6 @@ import { SocketIOConnection } from "@slate-collaborative/backend";
 import { SocketIOCollaborationOptions } from "@slate-collaborative/backend/lib/SocketIOConnection";
 import express from "express";
 import path from "path";
-import { Client } from "pg";
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,13 +22,6 @@ const defaultValue = [
     ],
   },
 ];
-
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: { rejectUnauthorized: false },
-// });
-
-// client.connect();
 
 const config: SocketIOCollaborationOptions = {
   entry: server, // or specify port to start io server
